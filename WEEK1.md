@@ -1,238 +1,299 @@
-WEEK 1 — C Fundamentals + Linux Programming Basics
+# Week 1 — C Fundamentals & Linux Programming Basics
 
-Goal of Week 1:
-Establish a strong C foundation, get comfortable with compiling, debugging, memory, and system-level thinking.
-By end of week → you should be able to write small C programs and use Linux dev tools.
+The purpose of Week 1 is to build a solid foundation in C programming, understand the Linux development toolchain, and write your first system-level programs.  
+By the end of this week, you will be comfortable with gcc, gdb, valgrind, strace, pointers, dynamic memory, basic syscalls, fork/exec, and completing a real mini-project.
 
-📅 Day 1 — Hello C + Toolchain Basics (1.5–2 hrs)
+---
 
-Topics:
+## Table of Contents
+1. Overview
+2. Daily Plan
+3. Day 1 — Hello C & Toolchain
+4. Day 2 — Variables, Functions, Multi-file Builds
+5. Day 3 — Pointers
+6. Day 4 — Dynamic Memory
+7. Day 5 — File I-O and Syscalls
+8. Day 6 — Processes fork–exec
+9. Day 7 — Mini Project: File Copier
+10. Completion Checklist
 
-gcc usage
+---
 
-basic C syntax
+# Overview
 
-strace intro
+### Goals of Week 1
+- Learn how to write, compile, and debug C programs.  
+- Understand memory, pointers, and dynamic allocation.  
+- Learn to use Linux developer tools (gcc, gdb, valgrind, strace).  
+- Understand how processes work using fork() and exec().  
+- Build a small but real systems-level project.
 
-Tasks:
+### Daily Time Required  
+**1.5–2 hours per day** (evening schedule).
 
-Create day1/hello.c
+---
 
-Compile and run:
+# Daily Plan
 
+| Day | Topic | What You Learn |
+|-----|-------|----------------|
+| 1 | Toolchain, Hello C | gcc, binary basics, strace |
+| 2 | Functions + Multi-file builds | modular C, linking |
+| 3 | Pointers | memory addressing, arrays vs pointers |
+| 4 | Dynamic Memory | malloc, free, valgrind |
+| 5 | File IO | open/read/write syscalls |
+| 6 | fork + exec | process creation |
+| 7 | Project | file copier using syscalls |
+
+---
+
+# Day 1 — Hello C & Toolchain
+
+**Time:** 1.5–2 hours
+
+### What you learn
+- gcc basics  
+- how a C program becomes a binary  
+- system calls using `strace`
+
+### Tasks
+1. Create folder `day1/`  
+2. Create file `day1/hello.c` with:
+
+```
+#include <stdio.h>
+
+int main() {
+    printf("Hello Systems World!\\n");
+    return 0;
+}
+```
+
+3. Compile & run:
+
+
+```
 gcc hello.c -o hello
 ./hello
 
+```
 
-Analyze binary:
+4. Inspect the binary:
 
+
+```
 file hello
 ldd hello
 strace ./hello
+```
+
+5. Write observations in `day1/README.md`
+
+### Reading
+OSTEP — Introduction (~10 pages)
+
+### Deliverables
+- hello.c  
+- README.md
+
+---
+
+# Day 2 — Variables, Functions, Multi-file Builds
+
+**Time:** 1.5 hours
+
+### What you learn
+- functions  
+- headers  
+- multi-file compilation  
+
+### Tasks
+1. Create `day2/main.c` and `day2/math_ops.c`
+2. Implement add/sub/mul/div
+3. Compile:
 
 
-Reading:
+```
+gcc main.c math_ops.c -o calc
 
-OSTEP Intro (first 10 pages)
+```
+### Reading
+K&R C — Chapters 1–2
 
-Commit:
-day1/hello.c, notes in day1/README.md
+### Deliverables
+- main.c  
+- math_ops.c  
+- README.md
 
-📅 Day 2 — Variables, Functions, I/O (1.5 hrs)
+---
 
-Topics:
+# Day 3 — Pointers
 
-data types
+**Time:** 2 hours
 
-scanf/printf
+### What you learn
+- pointers  
+- memory addresses  
+- pointer arithmetic  
+- arrays vs pointers  
 
-multiple C files & compilation
-
-Tasks:
-
-Create day2/math_ops.c
-
-Write functions: add, sub, mul, div
-
-Compile with multiple files:
-
-gcc math_ops.c main.c -o calc
+### Tasks
+1. Create `day3/pointers.c`
+2. Print addresses & use pointer arithmetic
+3. Debug with:
 
 
-Reading:
-
-K&R C (free PDF) — Chapter 1 & 2
-
-Short video: "C Programming Tutorial" by freeCodeCamp (first 30 mins)
-
-Commit:
-day2/ folder with programs + notes
-
-📅 Day 3 — Pointers Deep Dive (2 hrs)
-
-Topics:
-
-pointers
-
-pointer arithmetic
-
-arrays vs pointers
-
-memory layout
-
-Tasks:
-
-Write pointer examples in day3/pointers.c
-
-Print addresses, offsets
-
-Create small function operating on arrays
-
-Debug with gdb:
-
+```
 gdb ./pointers
 
+```
 
-Reading:
+### Reading  
+K&R — Pointers  
+OSTEP — Processes overview
 
-K&R pointers section
+### Deliverables  
+- pointers.c
 
-OSTEP: Processes (first part)
+---
 
-Commit:
-day3/pointers.c
+# Day 4 — Dynamic Memory
 
-📅 Day 4 — Dynamic Memory (malloc/free) (2 hrs)
+**Time:** 2 hours
 
-Topics:
+### What you learn
+- malloc  
+- free  
+- realloc  
+- valgrind usage  
 
-malloc
+### Tasks
+1. Create `day4/memory.c`
+2. Allocate & free memory
+3. Introduce a memory leak
+4. Detect with:
 
-calloc
 
-realloc
-
-memory leaks
-
-Tasks:
-
-Build day4/memory.c
-
-Allocate & free array
-
-Introduce an intentional memory leak
-
-Detect leak:
-
+```
 valgrind ./memory
 
+```
+### Reading  
+CS:APP — Memory intro
 
-Reading:
+### Deliverables
+- memory.c  
+- README.md  
+- valgrind output
 
-CS:APP Memory chapter (first 6–10 pages)
+---
 
-Commit:
-day4/memory.c + valgrind output screenshot
+# Day 5 — File I-O and Syscalls
 
-📅 Day 5 — File I/O & Basic Syscalls (1.5 hrs)
+**Time:** 1.5 hours
 
-Topics:
+### What you learn
+- open  
+- read  
+- write  
+- close  
+- differences between stdio and syscalls  
 
-fopen/fread/fwrite
+### Tasks
+1. Create `day5/file_ops.c`
+2. Use syscalls to write a file
+3. Compare with stdio (`fopen`, `fwrite`)
 
-POSIX open/read/write
+### Reading  
+man 2 open  
+OSTEP — File system intro
 
-file descriptors
+### Deliverables  
+- file_ops.c
 
-Tasks:
+---
 
-Create day5/file_ops.c
+# Day 6 — Processes fork & exec
 
-Write program using:
+**Time:** 2 hours
 
-int fd = open("test.txt", O_CREAT | O_WRONLY, 0644);
-write(fd, "hello", 5);
-close(fd);
+### What you learn
+- fork()  
+- parent vs child  
+- exec() family  
+- process IDs  
+
+### Tasks
+1. Create `day6/fork_demo.c`
+2. Use fork()
+3. In child:
 
 
-Compare with fopen version
+```
+execl("/bin/ls", "ls", NULL);
 
-Reading:
+```
 
-man 2 open
+4. Inspect via:
 
-OSTEP: File system intro (5–7 pages)
 
-Commit:
-day5/file_ops.c
-
-📅 Day 6 — Process & fork() Intro (2 hrs)
-
-Topics:
-
-fork()
-
-getpid()
-
-parent/child behavior
-
-execve basics
-
-Tasks:
-
-Create day6/fork_demo.c
-
-Print parent/child PIDs
-
-Create a child that execs /bin/ls
-
-Trace with strace:
-
+```
 strace ./fork_demo
 
+```
 
-Reading:
+### Reading  
+OSTEP — Process API
 
-OSTEP Process API chapter
+### Deliverables  
+- fork_demo.c  
+- README.md
 
-Short video: “fork() in 10 minutes”
+---
 
-Commit:
-day6/
+# Day 7 — Mini Project: File Copier
 
-📅 Day 7 — Week 1 Mini Project (2–3 hrs)
-Project: Mini File Copier with Logging
+**Time:** 2–3 hours
 
-Build a program that:
+### Objective  
+Build a file copier using ONLY syscalls.
 
-takes 2 arguments: input file, output file
+### Requirements
+- Accept input & output file names  
+- Read in chunks (4096 bytes recommended)  
+- Use open/read/write/close  
+- Print:
+  - total bytes copied  
+  - time taken  
 
-reads input file in chunks
-
-writes to output file
-
-prints logs: bytes copied, time taken
-
-handles errors properly
-
-Skills tested:
-
-file I/O
-
-loops
-
-error handling
-
-command-line args
-
-performance measurement
-
-Bonus: measure time using:
-
-clock_gettime(CLOCK_MONOTONIC, &ts)
+### Time measurement
+Use:
 
 
-Commit:
-projects/week1-filecopy/
+```
+clock_gettime(CLOCK_MONOTONIC, &ts);
 
-Screenshot: run the program on a 20MB file and include output in README.
+```
+
+
+README must include:
+- example output  
+- performance notes  
+
+---
+
+# Completion Checklist
+
+- [ ] Compile C programs with gcc  
+- [ ] Debug using gdb  
+- [ ] Detect memory issues using valgrind  
+- [ ] Understand pointers clearly  
+- [ ] Use dynamic memory safely  
+- [ ] Use POSIX syscalls  
+- [ ] Understand fork() and exec()  
+- [ ] Complete mini project  
+
+---
+
+# End of Week 1 Plan
+
