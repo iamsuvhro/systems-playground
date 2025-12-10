@@ -1,0 +1,31 @@
+Execute command for the program:
+gcc -Wall -Wextra -O0 -g hello.c -o hello
+
+Explanation of this command:
+-> gcc is use for convert your code into machine code.
+-> -Wall is use for if code have any bugs it will throw warnings basically enable all warnings
+-> -Wextra is for additional warnings
+-> -O0 is for optimization level O (no optimization)
+-> -g Allows GDB to show line numbers, variables, stack traces, etc. Without this, debugging is pain.
+-> hello.c is the source filename.
+-> -o hello is basically a output filename -o is flag.
+
+Overall Summary:
+It compiles hello.c into an executable named hello, with full warnings ON, no optimizations, and full debug information.
+
+Command to inspect the binary
+file hello
+ldd hello
+readelf -h hello
+
+This builds awareness of:
+
+file type
+shared libraries
+ELF header
+
+Run under gdb for debugging:
+gdb ./filename e.g. -> gdb ./hello
+>> run
+>> exit
+
