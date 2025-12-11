@@ -1,0 +1,39 @@
+Day 2 Notes:
+
+Compile individual files command:
+gcc -Wall -Wextra -O0 -g -c main.c
+gcc -Wall -Wextra -O0 -g -c math_ops.c
+
+Link them:
+gcc main.o math_ops.o -o calc
+
+
+| Flag      | Meaning                  | Quick memory trick                |
+| --------- | ------------------------ | --------------------------------- |
+| `-Wall`   | common warnings          | "Warn all"                        |
+| `-Wextra` | extra warnings           | "Warn extra"                      |
+| `-O0`     | disable optimizations    | “O-zero = raw code for debugging” |
+| `-g`      | debug info               | “g = gdb info”                    |
+| `-c`      | compile only, no linking | “c = create .o file only”         |
+
+GDB – Short Notes
+1. break main
+Set a breakpoint at main().
+
+2. run
+Start the program.
+
+3. next
+Execute line-by-line (does not enter functions).
+
+4. print a
+Shows the current value of variable a by reading program memory.
+5. print <variable>
+Works only because -g stores variable names and debug info in the binary.
+For structs/unions
+6. print c shows all fields because unions share the same memory.
+
+- Core Idea to Remember:
+
+1. GCC flags control warnings, optimizations, debugging, and output behavior.
+2. GDB reads live program memory and uses debug symbols (-g) to display variables and source lines.
