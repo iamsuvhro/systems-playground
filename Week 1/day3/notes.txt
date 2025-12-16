@@ -1,0 +1,51 @@
+Notes Day 3:
+All the notes of day 3 focusing on Pointer.
+
+Concept:
+
+1. In C to check or get the address of a variable need to use '&' (e.g. &x)
+2. To define a pointer in C need to use *p 
+
+1. Defining (The "Badge")
+int *p;
+  - Meaning: "Create a variable named p that is allowed to hold addresses."
+  - The Star: Tells the computer p is not a normal integer.
+
+2. Linking (The "Connection")
+p = &x;
+  - Meaning: "Take the address of x and save it inside p."
+  - The Star: NO STAR.
+  - Why? Because p holds addresses. &x is an address. They match perfectly.
+
+3. Using (The "Action")
+Once you have linked them, if you want to actually change the value of 10 to 20 using the pointer, that is when you bring the star back.
+*p = 20;
+   - Meaning: "Travel to the address inside p, and change the value there to 20."
+   - The Star: YES. The star acts as the "key" to open the door and touch the data.
+
+
+Quick Notes:
+1. Good practise is always assign NULL while declaring a pointer or else by default it will point some garbage.
+2. Output specifier: %p -> address %x -> hexadecimal address %d -> integer.
+3. Int is 4 bytes, Char is 1 byte, double is 8 bytes
+4. pointer++ mean it will increase one size of type for example if int then +4size if char then +1 etc..
+5. In array pointer when we initialize a pointer of that array then that pointer can increase by one step pointer++ 
+   but array cant becuase it constant.
+6. when I use * mean I am doing dereferencing that mean "follow the address to get to the actual data.".
+7. In code i have implemented inbuilt functionalities of strlen, strrev
+
+
+| Specifier | Meaning                                           |
+| --------- | ------------------------------------------------- |
+| **%d**    | integer (int)                                     |
+| **%u**    | unsigned int                                      |
+| **%ld**   | long                                              |
+| **%f**    | float                                             |
+| **%lf**   | double                                            |
+| **%c**    | char                                              |
+| **%s**    | string (char*)                                    |
+| **%p**    | pointer (memory address) — MUST cast to `(void*)` |
+| **%x**    | integer in hexadecimal                            |
+| **%zu**   | size_t (used with sizeof)                         |
+
+
