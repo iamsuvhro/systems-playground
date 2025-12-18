@@ -1,0 +1,52 @@
+Day 4 Notes:
+
+Topics:
+
+Stack vs Heap Memory
+malloc() — Dynamic Memory Allocation
+calloc() — Zero-Initialized Allocation
+realloc() — Resizing Memory
+free() — Releasing Heap Memory
+Memory Leaks and Common Memory Bugs
+Valgrind — Detecting Leaks & Invalid Access
+void* Pointer — Generic & Untyped Pointer
+Heap-Based Buffer Creation & Manipulation
+
+Pointer casting for heap memory
+
+
+Pointer Casting for Heap Memory
+
+1. Void Pointer: When you create a Pointer in C and during creation you dont know what type of data will be stored
+   inside this Pointer in that case we use "Void Pointer".
+   In the code void_pointer.c you can see we create void Pointer and stored integer and char both.
+   Void Pointer is a pointer without any datatype. (malloc, calloc both use void pointer)
+
+   Why it exists?
+   Because memory allocation functions cannot know what type you want.
+
+2. malloc: While assiging dynamic memory allocation when I dont know how many memory space it need interms of bytes.
+   So in C using built in malloc functions (Memory Allocation) use to assiging custom memory.
+   Pros:
+      It helps to create dynamic memory allocation.
+   Cons:
+      While assiging memory space initially it point garbage value until you add some values.
+
+3. calloc:
+      It is a contiguous allocation and solves the problem of malloc function. And it allocate 
+      memory dynamically and sets all allocated bytes to 0.
+
+4. realloc:
+      Let suppose I want add more memory or increase or reallocate few more size into it. Then in that 
+      case realloc helps us to merge existing memory with the newly allocated size because realloc does not just give you a new empty empty lot.
+      It acts like a Full-Service Moving Company.
+
+5. Valgrind: 
+      It is a tool to check in the script if there is any memory leakage or not.
+      It simply just check the total allocation is free or not after usage. If not free means memory leak.
+      command:
+            valgrind -s --leak-check=full --show-leak-kinds=all --track-origin=yes ./outputfile.outputfile
+
+
+Things to remember:
+ - Always allocate memory when you needed and once you are done with it free that memory slot.
