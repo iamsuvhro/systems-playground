@@ -1,0 +1,2 @@
+Hello from syscall write!
+This is the newline hasbeen appended.

@@ -1,0 +1,25 @@
+Day 5 Notes:
+
+Topic will cover:
+1. What is syscall?
+open()
+read()
+write()
+close()
+
+You Want,Standard C Code,Meaning
+Read only,"""r""",Open existing file.
+Write only,"""w""",Create new (or wipe existing).
+Write + Read,"""w+""","Create new/Wipe, then allow both Read & Write."
+Read + Write,"""r+""","Open existing, allow both (No wiping)."
+
+There are two critical secrets about fgets that you need to know.
+
+1. The "Minus One" Rule (The Safety Cap)
+When you tell fgets the size is 255, it will actually only read 254 characters.
+ - Why? Because C strings need a Null Terminator (\0) at the end to mark the finish line.
+ - The Math: 254 characters from the file + 1 invisible \0 added by C = 255 bytes total.
+
+2. The "New Line" Rule (The Early Stop)
+fgets is designed to read Line by Line. If the line in your text file is just "Hello" (5 letters), 
+fgets will read those 5 letters, see the "Enter" key (\n), and stop immediately. It won't try to fill the remaining 249 slots.

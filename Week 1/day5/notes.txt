@@ -1,0 +1,92 @@
+Day 5 Notes:
+
+Topic will cover:
+1. what is fopen, fprintf, fgets etc..
+2. What is syscall?
+open()
+read()
+write()
+close()
+3. 
+
+
+You Want,Standard C Code,Meaning
+Read only,"""r""",Open existing file.
+Write only,"""w""",Create new (or wipe existing).
+Write + Read,"""w+""","Create new/Wipe, then allow both Read & Write."
+Read + Write,"""r+""","Open existing, allow both (No wiping)."
+
+There are two critical secrets about fgets that you need to know.
+
+1. The "Minus One" Rule (The Safety Cap)
+When you tell fgets the size is 255, it will actually only read 254 characters.
+ - Why? Because C strings need a Null Terminator (\0) at the end to mark the finish line.
+ - The Math: 254 characters from the file + 1 invisible \0 added by C = 255 bytes total.
+
+2. The "New Line" Rule (The Early Stop)
+fgets is designed to read Line by Line. If the line in your text file is just "Hello" (5 letters), 
+fgets will read those 5 letters, see the "Enter" key (\n), and stop immediately. It won't try to fill the remaining 249 slots.
+
+
+Here is the precise truth:
+
+1. syscall (open, read, write)
+   Directly calls Hardware? NO.
+
+      - This is the biggest misconception. Your code lives in "User Land" (Ring 3). The Hardware lives in "Hardware Land."
+      - A syscall is a hotline to the OS Kernel (Ring 0). You call the Kernel, and the Kernel talks to the Hardware.
+      - Analogy: You don't walk into the bank vault (Hardware). You ask the Teller (Kernel) to get money for you.
+
+   Less Abstraction? YES.
+      -It skips the C Library's "politeness" and buffers. It goes straight to the Kernel.
+
+   Faster? USUALLY.
+      - It has less "overhead" (extra code running) than fopen, but every System Call forces the CPU to pause and switch modes (Context Switch), which has a cost.
+
+2. fopen, fclose, fprintf
+   Not direct Hardware? YES.
+   More Abstraction? YES.
+      - It adds a "Buffer Layer" (a waiting room) in your RAM.
+   Slower? IT DEPENDS.
+      - For big chunks: Yes, slightly slower because of the extra memory copy.
+      - For tiny writes: It is actually FASTER!
+      - Why? Calling the Kernel is expensive (like making a phone call).
+         syscall: Calls the Kernel 100 times for 100 characters. (100 phone calls).
+         fprintf: Saves 100 characters in a buffer, then calls the Kernel ONCE. (1 phone call).
+
+
+# System Call (syscall):
+
+A syscall is a trap into the kernel.
+Your program → Kernel → Hardware
+
+Examples:
+open()
+read()
+write()
+close()
+
+These are NOT normal functions.
+They are entry points into the OS.
+----------------------
+0644:
+----------------------
+The leading 0 is extremely important. It acts as a secret code to the C compiler.
+It tells C: "Treat this number as OCTAL (Base-8), not Decimal (Base-10)."
+----------------------
+File Descriptor:
+----------------------
+A File Descriptor = an integer that identifies an open file inside the kernel’s file table.
+It does NOT store file data — it stores a reference to kernel-managed file metadata.
+"It POINTS to the kernel structure that holds the real file state."
+-----------------------
+read() vs fgets():
+-----------------------
+read() reads raw bytes from the kernel with no buffering.
+fgets() uses a user-space buffer in libc and reads lines, not raw bytes.
+
+-----------------------
+perror:
+-----------------------
+It is C's built-in "translator." It takes the confusing numeric error code that the system gave you and translates it into a human-readable sentence.
+When a system call (like open or malloc) fails, it doesn't just return -1. It also secretly updates a global variable called errno (Error Number).
